@@ -1,0 +1,1449 @@
+backend:
+  name: git-gateway
+  accept_roles:
+    - admin
+    - editor
+  branch: master
+media_folder: theme/assets/images
+public_folder: /assets/images
+collections:
+  - name: pages
+    label: Pages
+    identifier_field: title
+    extension: md
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    folder: cms/pages
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '{{slug}}.html'
+      - &ref_0
+        label: Seo
+        name: seo
+        widget: object
+        collapsed: true
+        fields:
+          - label: Title
+            name: title
+            widget: string
+            required: false
+          - label: Description
+            name: description
+            widget: string
+            required: false
+          - label: No index
+            name: noindex
+            widget: boolean
+            default: false
+            required: false
+          - label: Open Graph Title
+            name: og:title
+            widget: string
+            required: false
+          - label: Open Graph Image
+            name: og:image
+            widget: image
+            required: false
+            media_library:
+              config:
+                multiple: false
+          - label: Twitter Title
+            name: twitter:title
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Card
+            name: twitter:card
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Site
+            name: twitter:site
+            widget: string
+            required: false
+          - label: Twitter Creator
+            name: twitter:creator
+            widget: string
+            required: false
+          - label: Twitter Image
+            name: twitter:image
+            widget: image
+            required: false
+            media_library:
+              config:
+                multiple: false
+          - label: Additional HTML tags
+            name: additional_tags
+            widget: text
+            required: false
+  - name: terms
+    label: Terms
+    folder: cms/terms
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: ''
+        name: title
+        label: Name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - label: Term Details
+        name: body
+        widget: markdown
+        required: false
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: terms
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[terms].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_0
+  - name: services
+    label: Services
+    folder: cms/services
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: ''
+        name: title
+        label: Name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: f_service-details
+        label: Service Details
+        widget: text
+        required: false
+      - hint: ''
+        name: f_service-icon
+        label: Service Icon
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_service-thumbnail
+        label: Service Thumbnail
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: services
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[services].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_0
+  - name: social
+    label: Socials
+    folder: cms/social
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: ''
+        name: title
+        label: Name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: f_icon
+        label: Icon
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_link
+        label: Link
+        widget: string
+        required: false
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: social
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[social].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_0
+  - label: Theme Settings
+    name: settings
+    identifier_field: title
+    extension: json
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    files:
+      - label: General
+        name: site
+        file: cms/_data/settings/site.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: General
+          - hint: Full domain url (needed for a correct sitemap file)
+            name: domain
+            label: Domain
+            widget: string
+            required: false
+          - name: favicon
+            label: Favicon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: apple_touch_icon
+            label: Apple Touch Icon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: header_additional_content
+            label: Additional Content Header
+            hint: Content here will be placed before </head> tag
+            widget: text
+            required: false
+          - name: footer_additional_content
+            label: Additional Content Footer
+            hint: Content here will be placed before </body> tag
+            widget: text
+            required: false
+          - name: images_optimization
+            label: Images Optimization
+            widget: object
+            collapsed: false
+            fields:
+              - label: Image Formats
+                name: formats
+                widget: select
+                multiple: true
+                options:
+                  - label: Avif
+                    value: avif
+                  - label: Webp
+                    value: webp
+              - label: Image Dimensions
+                name: dimensions
+                widget: select
+                multiple: true
+                options:
+                  - label: '500'
+                    value: 500
+                  - label: '800'
+                    value: 800
+                  - label: '1080'
+                    value: 1080
+                  - label: '1600'
+                    value: 1600
+                  - label: '2000'
+                    value: 2000
+                  - label: '2600'
+                    value: 2600
+      - label: Colors
+        name: colors
+        file: cms/_data/colors.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Colors
+      - label: Texts
+        name: texts
+        file: cms/_data/texts.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Texts
+          - hint: 'Original text: Home, key: 2268ff'
+            label: Text
+            name: 2268ff
+            widget: string
+          - hint: 'Original text: Appointments, key: 64616cd4'
+            label: Text
+            name: 64616cd4
+            widget: string
+          - hint: 'Original text: Terms Of Service, key: -910fa3b'
+            label: Text
+            name: '-910fa3b'
+            widget: string
+          - hint: 'Original text: Privacy Policy, key: -3fbde6f6'
+            label: Text
+            name: '-3fbde6f6'
+            widget: string
+          - hint: 'Original text: Your , key: 51a662d'
+            label: Text
+            name: 51a662d
+            widget: string
+          - hint: 'Original text: Free Time , key: -175963c1'
+            label: Text
+            name: '-175963c1'
+            widget: string
+          - hint: 'Original text: begins with our , key: 6e8e29b8'
+            label: Text
+            name: 6e8e29b8
+            widget: string
+          - hint: 'Original text: Cleaning Experience, key: -103f210f'
+            label: Text
+            name: '-103f210f'
+            widget: string
+          - hint: >-
+              Original text: Need expert cleaning services you can trust?
+              Discover the premier choice for residential and commercial
+              cleaning in the Monroe County area., key: 1c7ec938
+            label: Text
+            name: 1c7ec938
+            widget: text
+          - hint: 'Original text: Book Now, key: 7b3ec11f'
+            label: Text
+            name: 7b3ec11f
+            widget: string
+          - hint: 'Original text: BEFORE, key: 748d337f'
+            label: Text
+            name: 748d337f
+            widget: string
+          - hint: 'Original text:  Johnson Cleaning, key: 34f6a4b2'
+            label: Text
+            name: 34f6a4b2
+            widget: string
+          - hint: >-
+              Original text: Pick the Date & We Promise Not To Be Late., key:
+              -44df6776
+            label: Text
+            name: '-44df6776'
+            widget: string
+          - hint: >-
+              Original text: Schedule your next appointment in an instant. Pick
+              the ideal date and time you'd like us to show up and we'll deliver
+              you a cleaning experience second to none., key: 5ef414d9
+            label: Text
+            name: 5ef414d9
+            widget: text
+          - hint: 'Original text: AFTER, key: 3b50dbc'
+            label: Text
+            name: 3b50dbc
+            widget: string
+          - hint: 'Original text: Benefits, key: 685742dc'
+            label: Text
+            name: 685742dc
+            widget: string
+          - hint: 'Original text: Why choose us, key: 55aacacf'
+            label: Text
+            name: 55aacacf
+            widget: string
+          - hint: >-
+              Original text: Choose us to the solution to your home maintenance
+              needs. Johnson Carpet & Furniture Cleaning prides itself on first
+              rate experience that exemplifies an attention to detail and a
+              passion to deliver a quality result for each customer., key:
+              -7a254f20
+            label: Text
+            name: '-7a254f20'
+            widget: text
+          - hint: 'Original text: Trained & Skilled Staffing, key: -2ab82e5b'
+            label: Text
+            name: '-2ab82e5b'
+            widget: string
+          - hint: >-
+              Original text: Our team consists of trained and skilled
+              professionals who deliver top-quality cleaning every time., key:
+              b3dba83
+            label: Text
+            name: b3dba83
+            widget: text
+          - hint: 'Original text: Timely Service, key: -11a81251'
+            label: Text
+            name: '-11a81251'
+            widget: string
+          - hint: >-
+              Original text: Your time is valuable & we look to provide an
+              efficient service experience for you., key: 25183838
+            label: Text
+            name: '25183838'
+            widget: string
+          - hint: 'Original text: Commitment to Excellence, key: -7d4945e6'
+            label: Text
+            name: '-7d4945e6'
+            widget: string
+          - hint: >-
+              Original text: Our goal is to make sure your home or facility is
+              exceeds your expectations once our job is completed., key:
+              -2074c13f
+            label: Text
+            name: '-2074c13f'
+            widget: text
+          - hint: 'Original text: Services We Provide, key: 506f0831'
+            label: Text
+            name: 506f0831
+            widget: string
+          - hint: 'Original text: Cleaning is more than just a task. , key: -67ae8fd9'
+            label: Text
+            name: '-67ae8fd9'
+            widget: string
+          - hint: >-
+              Original text: It's a way to bring extra care or comfort to your
+              home or business., key: 7ef60e7e
+            label: Text
+            name: 7ef60e7e
+            widget: string
+          - hint: 'Original text: Get in touch with us, key: 5d4fbc46'
+            label: Text
+            name: 5d4fbc46
+            widget: string
+          - hint: 'Original text: 585-709-2912, key: 6d6bf950'
+            label: Text
+            name: 6d6bf950
+            widget: string
+          - hint: >-
+              Original text: Want to inquire about our service? Perfect, send us
+              a message and we will get back to you within 48 hours to discuss
+              your service request in detail. If your ready to schedule your
+              appointment now you can do so , key: 46e126fd
+            label: Text
+            name: 46e126fd
+            widget: text
+          - hint: 'Original text: here., key: 5e92e3e'
+            label: Text
+            name: 5e92e3e
+            widget: string
+          - hint: 'Original text: First Name*, key: -33504eb1'
+            label: Text
+            name: '-33504eb1'
+            widget: string
+          - hint: 'Original text: Last Name*, key: -6eb65f0b'
+            label: Text
+            name: '-6eb65f0b'
+            widget: string
+          - hint: 'Original text: Email*, key: 7bec142e'
+            label: Text
+            name: 7bec142e
+            widget: string
+          - hint: 'Original text: Phone*, key: -718ea364'
+            label: Text
+            name: '-718ea364'
+            widget: string
+          - hint: 'Original text: How Can I Help*, key: -6c5eea0e'
+            label: Text
+            name: '-6c5eea0e'
+            widget: string
+          - hint: >-
+              Original text: Thank you! Your submission has been received!, key:
+              5a0ea5a1
+            label: Text
+            name: 5a0ea5a1
+            widget: string
+          - hint: >-
+              Original text: Oops! Something went wrong while submitting the
+              form., key: -7c112e99
+            label: Text
+            name: '-7c112e99'
+            widget: string
+          - hint: 'Original text: LOGO, key: 23bdab'
+            label: Text
+            name: 23bdab
+            widget: string
+          - hint: 'Original text: CONTACT, key: 6382b000'
+            label: Text
+            name: 6382b000
+            widget: string
+          - hint: 'Original text: DarquinnJohnson730@gmail.com, key: 1616a98e'
+            label: Text
+            name: 1616a98e
+            widget: string
+          - hint: 'Original text: LOCATION, key: -600a704b'
+            label: Text
+            name: '-600a704b'
+            widget: string
+          - hint: 'Original text: Rochester, New York, key: 1ce2c534'
+            label: Text
+            name: 1ce2c534
+            widget: string
+          - hint: 'Original text: SOCIAL, key: -6de4f493'
+            label: Text
+            name: '-6de4f493'
+            widget: string
+          - hint: 'Original text: © 2024 Johnson Cleaning Service., key: -271dc0c2'
+            label: Text
+            name: '-271dc0c2'
+            widget: string
+          - hint: 'Original text: Updated Terms & Conditions, key: 6cb7b8d0'
+            label: Text
+            name: 6cb7b8d0
+            widget: string
+          - hint: 'Original text: Last Updated:, key: 2876a129'
+            label: Text
+            name: 2876a129
+            widget: string
+          - hint: 'Original text:  September 25th, 2024, key: 7de1e61a'
+            label: Text
+            name: 7de1e61a
+            widget: string
+          - hint: 'Original text: No items found., key: 3d503d2b'
+            label: Text
+            name: 3d503d2b
+            widget: string
+          - hint: 'Original text: ​, key: 200b'
+            label: Text
+            name: 200b
+            widget: string
+          - hint: >-
+              Original text: Collecting and Using Your Personal Data, key:
+              3b4d1c6a
+            label: Text
+            name: 3b4d1c6a
+            widget: string
+          - hint: 'Original text: Personal Data, key: 4eb6458a'
+            label: Text
+            name: 4eb6458a
+            widget: string
+          - hint: >-
+              Original text: While using Our Service, We may ask You to provide
+              Us with certain personally identifiable information that can be
+              used to contact or identify You. Personally identifiable
+              information may include, but is not limited to:, key: -195a589f
+            label: Text
+            name: '-195a589f'
+            widget: text
+          - hint: 'Original text: Email address, key: 71575750'
+            label: Text
+            name: '71575750'
+            widget: string
+          - hint: 'Original text: First name and last name, key: 28200d87'
+            label: Text
+            name: 28200d87
+            widget: string
+          - hint: 'Original text: Phone number, key: -1f5cfda5'
+            label: Text
+            name: '-1f5cfda5'
+            widget: string
+          - hint: >-
+              Original text: Address, State, Province, ZIP/Postal code, City,
+              key: -22ebb64e
+            label: Text
+            name: '-22ebb64e'
+            widget: string
+          - hint: 'Original text: Usage Data, key: a510f09'
+            label: Text
+            name: a510f09
+            widget: string
+          - hint: >-
+              Original text: Usage Data is collected automatically when using
+              the Service., key: 13b11237
+            label: Text
+            name: 13b11237
+            widget: string
+          - hint: >-
+              Original text: Usage Data may include information such as Your
+              Device's Internet Protocol address (e.g. IP address), browser
+              type, browser version, the pages of our Service that You visit,
+              the time and date of Your visit, the time spent on those pages,
+              unique device identifiers and other diagnostic data., key:
+              3d975dae
+            label: Text
+            name: 3d975dae
+            widget: text
+          - hint: >-
+              Original text: When You access the Service by or through a mobile
+              device, We may collect certain information automatically,
+              including, but not limited to, the type of mobile device You use,
+              Your mobile device unique ID, the IP address of Your mobile
+              device, Your mobile operating system, the type of mobile Internet
+              browser You use, unique device identifiers and other diagnostic
+              data., key: 634c672f
+            label: Text
+            name: 634c672f
+            widget: text
+          - hint: >-
+              Original text: We may also collect information that Your browser
+              sends whenever You visit our Service or when You access the
+              Service by or through a mobile device., key: 50fa946e
+            label: Text
+            name: 50fa946e
+            widget: text
+          - hint: 'Original text: Tracking Technologies and Cookies, key: 7d8db9f9'
+            label: Text
+            name: 7d8db9f9
+            widget: string
+          - hint: >-
+              Original text: We use Cookies and similar tracking technologies to
+              track the activity on Our Service and store certain information.
+              Tracking technologies used are beacons, tags, and scripts to
+              collect and track information and to improve and analyze Our
+              Service. The technologies We use may include:, key: 444cc91a
+            label: Text
+            name: 444cc91a
+            widget: text
+          - hint: >-
+              Original text: Cookies or Browser Cookies. A cookie is a small
+              file placed on Your Device. You can instruct Your browser to
+              refuse all Cookies or to indicate when a Cookie is being sent.
+              However, if You do not accept Cookies, You may not be able to use
+              some parts of our Service. Unless you have adjusted Your browser
+              setting so that it will refuse Cookies, our Service may use
+              Cookies., key: -4335cdbb
+            label: Text
+            name: '-4335cdbb'
+            widget: text
+          - hint: >-
+              Original text: Web Beacons. Certain sections of our Service and
+              our emails may contain small electronic files known as web beacons
+              (also referred to as clear gifs, pixel tags, and single-pixel
+              gifs) that permit the Company, for example, to count users who
+              have visited those pages or opened an email and for other related
+              website statistics (for example, recording the popularity of a
+              certain section and verifying system and server integrity)., key:
+              -16639a94
+            label: Text
+            name: '-16639a94'
+            widget: text
+          - hint: >-
+              Original text: Cookies can be "Persistent" or "Session" Cookies.
+              Persistent Cookies remain on Your personal computer or mobile
+              device when You go offline, while Session Cookies are deleted as
+              soon as You close Your web browser. Learn more about cookies on
+              the Privacy Policies website article., key: -72f87217
+            label: Text
+            name: '-72f87217'
+            widget: text
+          - hint: >-
+              Original text: We use both Session and Persistent Cookies for the
+              purposes set out below:, key: 54f9838b
+            label: Text
+            name: 54f9838b
+            widget: string
+          - hint: 'Original text: Necessary / Essential Cookies, key: -5e8438a5'
+            label: Text
+            name: '-5e8438a5'
+            widget: string
+          - hint: 'Original text: Type: Session Cookies, key: -3e06613b'
+            label: Text
+            name: '-3e06613b'
+            widget: string
+          - hint: 'Original text: Administered by: Us, key: -5b54940c'
+            label: Text
+            name: '-5b54940c'
+            widget: string
+          - hint: >-
+              Original text: Purpose: These Cookies are essential to provide You
+              with services available through the Website and to enable You to
+              use some of its features. They help to authenticate users and
+              prevent fraudulent use of user accounts. Without these Cookies,
+              the services that You have asked for cannot be provided, and We
+              only use these Cookies to provide You with those services., key:
+              19e8ca43
+            label: Text
+            name: 19e8ca43
+            widget: text
+          - hint: >-
+              Original text: Cookies Policy / Notice Acceptance Cookies, key:
+              3927b4c0
+            label: Text
+            name: 3927b4c0
+            widget: string
+          - hint: 'Original text: Type: Persistent Cookies, key: -67dc29fa'
+            label: Text
+            name: '-67dc29fa'
+            widget: string
+          - hint: >-
+              Original text: Purpose: These Cookies identify if users have
+              accepted the use of cookies on the Website., key: -6bfd7cf5
+            label: Text
+            name: '-6bfd7cf5'
+            widget: string
+          - hint: 'Original text: Functionality Cookies, key: -2a356906'
+            label: Text
+            name: '-2a356906'
+            widget: string
+          - hint: >-
+              Original text: Purpose: These Cookies allow us to remember choices
+              You make when You use the Website, such as remembering your login
+              details or language preference. The purpose of these Cookies is to
+              provide You with a more personal experience and to avoid You
+              having to re-enter your preferences every time You use the
+              Website., key: -4eb6fbbc
+            label: Text
+            name: '-4eb6fbbc'
+            widget: text
+          - hint: >-
+              Original text: For more information about the cookies we use and
+              your choices regarding cookies, please visit our Cookies Policy or
+              the Cookies section of our Privacy Policy., key: 6eb1541d
+            label: Text
+            name: 6eb1541d
+            widget: text
+          - hint: 'Original text: Use of Your Personal Data, key: -64b25093'
+            label: Text
+            name: '-64b25093'
+            widget: string
+          - hint: >-
+              Original text: The Company may use Personal Data for the following
+              purposes:, key: f553f4
+            label: Text
+            name: f553f4
+            widget: string
+          - hint: >-
+              Original text: To provide and maintain our Service, including to
+              monitor the usage of our Service., key: -72653b
+            label: Text
+            name: '-72653b'
+            widget: string
+          - hint: >-
+              Original text: To manage Your Account: to manage Your registration
+              as a user of the Service. The Personal Data You provide can give
+              You access to different functionalities of the Service that are
+              available to You as a registered user., key: -55997c1c
+            label: Text
+            name: '-55997c1c'
+            widget: text
+          - hint: >-
+              Original text: For the performance of a contract: the development,
+              compliance and undertaking of the purchase contract for the
+              products, items or services You have purchased or of any other
+              contract with Us through the Service., key: -4137147d
+            label: Text
+            name: '-4137147d'
+            widget: text
+          - hint: >-
+              Original text: To contact You: To contact You by email, telephone
+              calls, SMS, or other equivalent forms of electronic communication,
+              such as a mobile application's push notifications regarding
+              updates or informative communications related to the
+              functionalities, products or contracted services, including the
+              security updates, when necessary or reasonable for their
+              implementation., key: 274a3040
+            label: Text
+            name: 274a3040
+            widget: text
+          - hint: >-
+              Original text: To provide You with news, special offers and
+              general information about other goods, services and events which
+              we offer that are similar to those that you have already purchased
+              or enquired about unless You have opted not to receive such
+              information., key: 1d78f92a
+            label: Text
+            name: 1d78f92a
+            widget: text
+          - hint: >-
+              Original text: To manage Your requests: To attend and manage Your
+              requests to Us., key: -7d583056
+            label: Text
+            name: '-7d583056'
+            widget: string
+          - hint: >-
+              Original text: For business transfers: We may use Your information
+              to evaluate or conduct a merger, divestiture, restructuring,
+              reorganization, dissolution, or other sale or transfer of some or
+              all of Our assets, whether as a going concern or as part of
+              bankruptcy, liquidation, or similar proceeding, in which Personal
+              Data held by Us about our Service users is among the assets
+              transferred., key: -25fd9342
+            label: Text
+            name: '-25fd9342'
+            widget: text
+          - hint: >-
+              Original text: For other purposes: We may use Your information for
+              other purposes, such as data analysis, identifying usage trends,
+              determining the effectiveness of our promotional campaigns and to
+              evaluate and improve our Service, products, services, marketing
+              and your experience., key: 6ae02b69
+            label: Text
+            name: 6ae02b69
+            widget: text
+          - hint: >-
+              Original text: We may share Your personal information in the
+              following situations:, key: 150c0ee1
+            label: Text
+            name: 150c0ee1
+            widget: string
+          - hint: >-
+              Original text: With Service Providers: We may share Your personal
+              information with Service Providers to monitor and analyze the use
+              of our Service, to contact You., key: 43ed2289
+            label: Text
+            name: 43ed2289
+            widget: text
+          - hint: >-
+              Original text: For business transfers: We may share or transfer
+              Your personal information in connection with, or during
+              negotiations of, any merger, sale of Company assets, financing, or
+              acquisition of all or a portion of Our business to another
+              company., key: -73748bdc
+            label: Text
+            name: '-73748bdc'
+            widget: text
+          - hint: >-
+              Original text: With Affiliates: We may share Your information with
+              Our affiliates, in which case we will require those affiliates to
+              honor this Privacy Policy. Affiliates include Our parent company
+              and any other subsidiaries, joint venture partners or other
+              companies that We control or that are under common control with
+              Us., key: 55a1e0d1
+            label: Text
+            name: 55a1e0d1
+            widget: text
+          - hint: >-
+              Original text: With business partners: We may share Your
+              information with Our business partners to offer You certain
+              products, services or promotions., key: -42b65f04
+            label: Text
+            name: '-42b65f04'
+            widget: text
+          - hint: >-
+              Original text: With other users: when You share personal
+              information or otherwise interact in the public areas with other
+              users, such information may be viewed by all users and may be
+              publicly distributed outside., key: 2583be9a
+            label: Text
+            name: 2583be9a
+            widget: text
+          - hint: >-
+              Original text: With Your consent: We may disclose Your personal
+              information for any other purpose with Your consent., key:
+              36af68a1
+            label: Text
+            name: 36af68a1
+            widget: text
+          - hint: 'Original text: Retention of Your Personal Data, key: -3c89fa3c'
+            label: Text
+            name: '-3c89fa3c'
+            widget: string
+          - hint: >-
+              Original text: The Company will retain Your Personal Data only for
+              as long as is necessary for the purposes set out in this Privacy
+              Policy. We will retain and use Your Personal Data to the extent
+              necessary to comply with our legal obligations (for example, if we
+              are required to retain your data to comply with applicable laws),
+              resolve disputes, and enforce our legal agreements and policies.,
+              key: -1dcf6edf
+            label: Text
+            name: '-1dcf6edf'
+            widget: text
+          - hint: >-
+              Original text: The Company will also retain Usage Data for
+              internal analysis purposes. Usage Data is generally retained for a
+              shorter period of time, except when this data is used to
+              strengthen the security or to improve the functionality of Our
+              Service, or We are legally obligated to retain this data for
+              longer time periods., key: 2c3e199
+            label: Text
+            name: 2c3e199
+            widget: text
+          - hint: 'Original text: Transfer of Your Personal Data, key: -4e28d4ef'
+            label: Text
+            name: '-4e28d4ef'
+            widget: string
+          - hint: >-
+              Original text: Your information, including Personal Data, is
+              processed at the Company's operating offices and in any other
+              places where the parties involved in the processing are located.
+              It means that this information may be transferred to — and
+              maintained on — computers located outside of Your state, province,
+              country or other governmental jurisdiction where the data
+              protection laws may differ than those from Your jurisdiction.,
+              key: -c68427d
+            label: Text
+            name: '-c68427d'
+            widget: text
+          - hint: >-
+              Original text: Your consent to this Privacy Policy followed by
+              Your submission of such information represents Your agreement to
+              that transfer., key: 6732fcf7
+            label: Text
+            name: 6732fcf7
+            widget: text
+          - hint: >-
+              Original text: The Company will take all steps reasonably
+              necessary to ensure that Your data is treated securely and in
+              accordance with this Privacy Policy and no transfer of Your
+              Personal Data will take place to an organization or a country
+              unless there are adequate controls in place including the security
+              of Your data and other personal information., key: -5e236654
+            label: Text
+            name: '-5e236654'
+            widget: text
+          - hint: 'Original text: Delete Your Personal Data, key: -533bcb0e'
+            label: Text
+            name: '-533bcb0e'
+            widget: string
+          - hint: >-
+              Original text: You have the right to delete or request that We
+              assist in deleting the Personal Data that We have collected about
+              You., key: ed39cac
+            label: Text
+            name: ed39cac
+            widget: text
+          - hint: >-
+              Original text: Our Service may give You the ability to delete
+              certain information about You from within the Service., key:
+              -721805c8
+            label: Text
+            name: '-721805c8'
+            widget: text
+          - hint: >-
+              Original text: You may update, amend, or delete Your information
+              at any time by signing in to Your Account, if you have one, and
+              visiting the account settings section that allows you to manage
+              Your personal information. You may also contact Us to request
+              access to, correct, or delete any personal information that You
+              have provided to Us., key: -539b8846
+            label: Text
+            name: '-539b8846'
+            widget: text
+          - hint: >-
+              Original text: Please note, however, that We may need to retain
+              certain information when we have a legal obligation or lawful
+              basis to do so., key: 1e2f3cb0
+            label: Text
+            name: 1e2f3cb0
+            widget: text
+          - hint: 'Original text: Disclosure of Your Personal Data, key: 740d0793'
+            label: Text
+            name: 740d0793
+            widget: string
+          - hint: 'Original text: Business Transactions, key: -15d82a4b'
+            label: Text
+            name: '-15d82a4b'
+            widget: string
+          - hint: >-
+              Original text: If the Company is involved in a merger, acquisition
+              or asset sale, Your Personal Data may be transferred. We will
+              provide notice before Your Personal Data is transferred and
+              becomes subject to a different Privacy Policy., key: -9686441
+            label: Text
+            name: '-9686441'
+            widget: text
+          - hint: 'Original text: Law enforcement, key: 2831f6a2'
+            label: Text
+            name: 2831f6a2
+            widget: string
+          - hint: >-
+              Original text: Under certain circumstances, the Company may be
+              required to disclose Your Personal Data if required to do so by
+              law or in response to valid requests by public authorities (e.g. a
+              court or a government agency)., key: -79ca4cd6
+            label: Text
+            name: '-79ca4cd6'
+            widget: text
+          - hint: 'Original text: Other legal requirements, key: 24c6f1c7'
+            label: Text
+            name: 24c6f1c7
+            widget: string
+          - hint: >-
+              Original text: The Company may disclose Your Personal Data in the
+              good faith belief that such action is necessary to:, key:
+              -529283cc
+            label: Text
+            name: '-529283cc'
+            widget: text
+          - hint: 'Original text: Comply with a legal obligation, key: -29ed1266'
+            label: Text
+            name: '-29ed1266'
+            widget: string
+          - hint: >-
+              Original text: Protect and defend the rights or property of the
+              Company, key: 2bb2b45d
+            label: Text
+            name: 2bb2b45d
+            widget: string
+          - hint: >-
+              Original text: Prevent or investigate possible wrongdoing in
+              connection with the Service, key: -78462390
+            label: Text
+            name: '-78462390'
+            widget: string
+          - hint: >-
+              Original text: Protect the personal safety of Users of the Service
+              or the public, key: -74760ddb
+            label: Text
+            name: '-74760ddb'
+            widget: string
+          - hint: 'Original text: Protect against legal liability, key: 286a1596'
+            label: Text
+            name: 286a1596
+            widget: string
+          - hint: 'Original text: Security of Your Personal Data, key: 611f8ca6'
+            label: Text
+            name: 611f8ca6
+            widget: string
+          - hint: >-
+              Original text: The security of Your Personal Data is important to
+              Us, but remember that no method of transmission over the Internet,
+              or method of electronic storage is 100% secure. While We strive to
+              use commercially acceptable means to protect Your Personal Data,
+              We cannot guarantee its absolute security., key: -5007763d
+            label: Text
+            name: '-5007763d'
+            widget: text
+          - hint: 'Original text: Links to Other Websites, key: -350ee5fa'
+            label: Text
+            name: '-350ee5fa'
+            widget: string
+          - hint: >-
+              Original text: Our Service may contain links to other websites
+              that are not operated by Us. If You click on a third party link,
+              You will be directed to that third party's site. We strongly
+              advise You to review the Privacy Policy of every site You visit.,
+              key: 69df83b0
+            label: Text
+            name: 69df83b0
+            widget: text
+          - hint: >-
+              Original text: We have no control over and assume no
+              responsibility for the content, privacy policies or practices of
+              any third party sites or services., key: 69806c71
+            label: Text
+            name: 69806c71
+            widget: text
+          - hint: 'Original text: Changes to this Privacy Policy, key: 793f7c4'
+            label: Text
+            name: 793f7c4
+            widget: string
+          - hint: >-
+              Original text: We may update Our Privacy Policy from time to time.
+              We will notify You of any changes by posting the new Privacy
+              Policy on this page., key: -56d8ec8f
+            label: Text
+            name: '-56d8ec8f'
+            widget: text
+          - hint: >-
+              Original text: We will let You know via email and/or a prominent
+              notice on Our Service, prior to the change becoming effective and
+              update the "Last updated" date at the top of this Privacy Policy.,
+              key: -1824785a
+            label: Text
+            name: '-1824785a'
+            widget: text
+          - hint: >-
+              Original text: You are advised to review this Privacy Policy
+              periodically for any changes. Changes to this Privacy Policy are
+              effective when they are posted on this page., key: -19e4ed89
+            label: Text
+            name: '-19e4ed89'
+            widget: text
+          - hint: 'Original text: ‍, key: 200d'
+            label: Text
+            name: 200d
+            widget: string
+          - hint: 'Original text: CMS, key: 10529'
+            label: Text
+            name: '10529'
+            widget: string
+          - hint: 'Original text: Setmore, key: -266b7169'
+            label: Text
+            name: '-266b7169'
+            widget: string
+          - hint: 'Original text: Quality Assurance, key: db0610c'
+            label: Text
+            name: db0610c
+            widget: string
+          - hint: >-
+              Original text: Our commitment to maintaining exceptional service
+              relies on your valuable feedback and open communication. We
+              greatly value your insights into the quality of our services, as
+              they play a crucial role in our continuous improvement. If ever
+              your experience does not meet your expectations, we are here to
+              swiftly address it., key: 4f66b1d
+            label: Text
+            name: 4f66b1d
+            widget: text
+          - hint: >-
+              Original text: If you find yourself dissatisfied with the
+              cleanliness following a service, we encourage you to report it to
+              us within 24 hours of the cleaning. Our dedicated team will
+              promptly return to your location to rectify any concerns, ensuring
+              that your needs are met to your satisfaction. Rest assured, there
+              will be no additional charges for this re-cleaning process.*Please
+              note that due to the 24-hour policy for cleaning corrections, we
+              do not offer discounts on cleaning services., key: 54cedd1c
+            label: Text
+            name: 54cedd1c
+            widget: text
+          - hint: >-
+              Original text: Your contentment is our top priority, and we are
+              dedicated to making your experience with us a positive one, key:
+              4e9fa28e
+            label: Text
+            name: 4e9fa28e
+            widget: text
+          - hint: 'Original text: Arrival Time, key: -7e0a452c'
+            label: Text
+            name: '-7e0a452c'
+            widget: string
+          - hint: >-
+              Original text: Delays can happen, and we will always communicate
+              with you in advance. Unexpected events (example: traffic, road
+              accidents, flat tire, etc.) that are out of our control can cause
+              some delays and will not result in last minute cancellations.
+              We’ll always support the appointment made and will try our best to
+              better accommodate our clients’ needs on the day, but we also
+              expect cooperation and understanding from you., key: 5776c4ea
+            label: Text
+            name: 5776c4ea
+            widget: text
+          - hint: 'Original text: Access To Your Home, key: 38339e83'
+            label: Text
+            name: '38339e83'
+            widget: string
+          - hint: 'Original text: Health & Safety, key: -25d066b0'
+            label: Text
+            name: '-25d066b0'
+            widget: string
+          - hint: >-
+              Original text: The well-being and safety of both our customers and
+              employees remain our topmost priority. We are committed to
+              implementing proactive measures to minimize the potential
+              transmission of any illnesses. If you or any household member are
+              experiencing symptoms of a contagious illness, such as a common
+              cold or flu, we kindly request that you take precautionary steps
+              during our service visits., key: -5d157ab2
+            label: Text
+            name: '-5d157ab2'
+            widget: text
+          - hint: 'Original text: Breakage, key: 8766fc0'
+            label: Text
+            name: 8766fc0
+            widget: string
+          - hint: "Original text: It’s bound to happen. We hate it when it does, and we do our best to prevent it! The following is critical communication regarding our breakage policies: \_• Sometimes breakage occurs when there are “booby traps”. Those are accidents waiting to happen (pictures not hung securely, top heavy items with unstable bases, wobbly, tippy objects). Each incident is reviewed on a case-by-case basis. We cannot take responsibility for “booby traps”. Please remove unstable breakables to a place we do not clean (we do not clean inside curios, China cabinets, or clear wet bar shelves). \_• Please move expensive figurines or glassware to a location we do not clean or have us skip that area completely if you do not wish to accept the risk. \_• In some cases, we will have the broken item repaired by a professional restoration company. Breakage values over $25 must be verified before replacement or reimbursement will be authorized. Please save the broken item for our inspection. Breakage must be reported within 24 hours of \_discovery., key: 106204ad"
+            label: Text
+            name: 106204ad
+            widget: text
+          - hint: 'Original text: Cancelation, key: 5d8b09b'
+            label: Text
+            name: 5d8b09b
+            widget: string
+          - hint: >-
+              Original text: We will assess a 50% fee if you cancel with less
+              than 24 “business hours” notice. Same day cancellation will result
+              in 100% charge of your total cleaning., key: -ae7a237
+            label: Text
+            name: '-ae7a237'
+            widget: text
+          - hint: 'Original text: Pets, key: 25e754'
+            label: Text
+            name: '25e754'
+            widget: string
+          - hint: >-
+              Original text: We're pet-friendly and understand the importance of
+              your furry companions in your home. However, for the safety and
+              comfort of both our team and your pets, we kindly request your
+              cooperation with the following guidelines: To ensure a smooth and
+              uninterrupted cleaning experience, please secure any pets that
+              might pose a threat to our team while they are in your home. It's
+              preferable to keep pets that may be sensitive to new people or
+              activities inside a crate or confined space during our cleaning
+              visit. This helps prevent any potential inconveniences or stress
+              for both the pets and our staff. Kindly note that we do not
+              provide cleaning services for pet-related accidents, such as potty
+              or urine cleanup. We appreciate your understanding in this matter.
+              We value the harmony between your pets and our cleaning procedures
+              and strive to create a safe and comfortable environment for all.,
+              key: 1df5c3ee
+            label: Text
+            name: 1df5c3ee
+            widget: text
+      - label: Links
+        name: links
+        file: cms/_data/links.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Links
+          - hint: 'Original link: /, key: 2f'
+            label: Link
+            name: 2f
+            widget: string
+          - hint: >-
+              Original link:
+              https://johnsonscarpetfurniturecleaning.setmore.com/, key:
+              6f20504e
+            label: Link
+            name: 6f20504e
+            widget: string
+          - hint: 'Original link: /terms-of-service/, key: -68cf0c45'
+            label: Link
+            name: '-68cf0c45'
+            widget: string
+          - hint: 'Original link: /privacy-policy/, key: -2f934417'
+            label: Link
+            name: '-2f934417'
+            widget: string
+          - hint: 'Original link: #, key: 23'
+            label: Link
+            name: '23'
+            widget: string
+          - hint: 'Original link: tel:5857092912, key: -5ca7a64b'
+            label: Link
+            name: '-5ca7a64b'
+            widget: string
+          - hint: 'Original link: mailto:darquinnjohnson730@gmail.com, key: 4a0f5156'
+            label: Link
+            name: 4a0f5156
+            widget: string
+          - hint: 'Original link: https://johnsoncarpets.com/admin/#/, key: -146021e8'
+            label: Link
+            name: '-146021e8'
+            widget: string
+          - hint: 'Original link: https://go.setmore.com/calendar, key: 261c5f7a'
+            label: Link
+            name: 261c5f7a
+            widget: string
+      - label: Images
+        name: images
+        file: cms/_data/images.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Images
+          - label: Image
+            name: i1220c641
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 7e5632a7
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i53051625
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-15ee7a68'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-69686ce'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-56a6855c'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-74b3f701'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 317f733b
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 2dcaa813
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 63d353d4
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 36c5d81b
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+publish_mode: editorial_workflow
